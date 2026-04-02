@@ -3,6 +3,7 @@ import Meals from './components/Meals';
 import { useState, useReducer } from 'react';
 import CartContext from './store/CartContext';
 import Modal from './components/UI/Modal';
+import Cart from './components/Cart';
 
 function cartReduser(state, action) {
   if (action.type === 'ADD_ITEM') {
@@ -36,17 +37,18 @@ function App() {
   function closeCart() {
     setCartIsOpen(false);
   }
+  function clearCart() {
+    dispatch({ type: 'CLEAR_CART' });
+  }
   return (
-    <CartContext.Provider value={{
-      items: cart,
-      addItem: addItem
-    }}>
+    <CartContext.Provider value={{ items: cart, addItem, clearCart}}>
       <Header onOpenCart={openCart} />
       <Meals />
-      <Modal open={cartIsOpen}>
-        <h2>Your Cart</h2>
-        <button onClick={closeCart}>Close</button>
-      </Modal>
+      {cart.length > 0 && (
+        <Modal open={cartIsOpen}>
+          <Cart onClose={closeCart} />
+        </Modal>
+      )}
     </CartContext.Provider>
   );
 }
