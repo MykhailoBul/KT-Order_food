@@ -3,7 +3,7 @@ import Button from './UI/Button'
 import { useContext, useEffect } from "react";
 import CartContext from "../store/CartContext";
 
-const Header = () => {
+const Header = ({ onOpenCart }) => {
     const cartCtx = useContext(CartContext);
 
     useEffect(() => {
@@ -20,7 +20,9 @@ const Header = () => {
                 <h1>React Food Order App</h1>
             </div>
             <nav>
-            <Button textOnly>Cart ({totalItems})</Button>
+                <Button textOnly onClick={onOpenCart}>
+                    Cart ({totalItems})
+                </Button>
             </nav>
         </header>
     )
